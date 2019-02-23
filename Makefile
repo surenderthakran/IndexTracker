@@ -13,7 +13,7 @@ endif
 run:
 ifdef DOCKER
 	@echo "...Running $(PROJECT_NAME)..."
-	java -cp classes com.surenderthakran.indextracker.Server
+	java -cp "classes:lib/*" com.surenderthakran.indextracker.Server
 else
 	@echo \"make run\" will only work inside docker!!!
 endif
@@ -26,4 +26,4 @@ compile:
 	@echo "...Compiling $(PROJECT_NAME)..."
 	rm -rf classes/*
 	find -name "*.java" > sources.txt
-	javac -d classes @sources.txt
+	javac -classpath "lib/*" -d classes @sources.txt
