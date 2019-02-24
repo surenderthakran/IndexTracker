@@ -1,12 +1,11 @@
 package com.surenderthakran.indextracker;
 
+import com.google.common.flogger.FluentLogger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.google.common.flogger.FluentLogger;
-
-public class Server{
+public class Server {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public static void main(String[] args) {
@@ -21,7 +20,7 @@ public class Server{
         Connection connection = new Connection(clientSocket);
 
         Thread thread = new Thread(connection);
-				thread.start();
+        thread.start();
       }
     } catch (IOException ioe) {
       logger.atSevere().withCause(ioe).log("Unable to start server.");
