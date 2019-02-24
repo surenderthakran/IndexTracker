@@ -4,40 +4,39 @@ PROJECT_NAME := IndexTracker
 
 install:
 ifdef DOCKER
-	$(MAKE) prep_install
-	$(MAKE) prep_compile
-	$(MAKE) compile
+	@$(MAKE) prep_install
+	@$(MAKE) prep_compile
+	@$(MAKE) compile
 else
 	@echo \"make install\" will only work inside docker!!!
 endif
 
 run:
 ifdef DOCKER
-	@echo "...Running $(PROJECT_NAME)..."
+	@echo "Running $(PROJECT_NAME)..."
 	java -cp "classes:lib/*" com.surenderthakran.indextracker.Server
 else
 	@echo \"make run\" will only work inside docker!!!
 endif
 
 recompile:
-	@echo "Recompiling $(PROJECT_NAME)..."
 	@$(MAKE) prep_compile
 	@$(MAKE) format
 	@$(MAKE) compile
 
 prep_install:
-	@echo "...Preparing to install $(PROJECT_NAME)..."
-	mkdir -p classes
+	@echo "Preparing to install $(PROJECT_NAME)..."
+	@mkdir -p classes
 
 prep_compile:
-	@echo "...Preparing to compile $(PROJECT_NAME)..."
-	rm -rf classes/*
+	@echo "Preparing to compile $(PROJECT_NAME)..."
+	@rm -rf classes/*
 	find -name "*.java" > sources.txt
 
 format:
-	@echo "...Formatting $(PROJECT_NAME)"
-	@java -jar lib/google-java-format-1.7-all-deps.jar --replace @sources.txt
+	@echo "Formatting $(PROJECT_NAME)..."
+	java -jar lib/google-java-format-1.7-all-deps.jar --replace @sources.txt
 
 compile:
-	@echo "...Compiling $(PROJECT_NAME)..."
+	@echo "Compiling $(PROJECT_NAME)..."
 	javac -Xdiags:verbose -classpath "lib/*" -d classes @sources.txt
