@@ -24,6 +24,12 @@ recompile:
 	@$(MAKE) format
 	@$(MAKE) compile
 
+reload:
+	@$(MAKE) prep_compile
+	@$(MAKE) format
+	@$(MAKE) compile
+	@$(MAKE) run
+
 prep_install:
 	@echo "Preparing to install $(PROJECT_NAME)..."
 	@mkdir -p classes
