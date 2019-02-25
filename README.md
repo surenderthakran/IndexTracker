@@ -1,7 +1,7 @@
 ## IndexTracker
 
 ```
-docker build --no-cache=true -t blogger .
+docker build --no-cache=true -t indextracker .
 
 docker run --rm -it -d \
 -v $(pwd)/:/java/ \
