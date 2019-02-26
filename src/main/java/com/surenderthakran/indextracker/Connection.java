@@ -1,6 +1,8 @@
 package com.surenderthakran.indextracker;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.StackSize;
+import com.surenderthakran.indextracker.net.exceptions.InvalidRequestException;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +10,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 class Connection implements Runnable {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -17,10 +21,9 @@ class Connection implements Runnable {
   private BufferedReader in;
   private PrintWriter out;
   private BufferedOutputStream dataOut;
-  private Request request;
 
-  Connection(Socket clientSkt) {
-    clientSocket = clientSkt;
+  Connection(Socket clientSocket) {
+    this.clientSocket = clientSocket;
   }
 
   @Override
@@ -31,10 +34,9 @@ class Connection implements Runnable {
       out = new PrintWriter(clientSocket.getOutputStream());
       dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
 
-      request = this.readRequest(in);
-      System.out.println(request);
+      Request request = this.parseRequest(in);
 
-      Router.route(request);
+      Response response = RequestRunner.execute(request);
 
       String responseBody = "Hello";
 
@@ -50,7 +52,8 @@ class Connection implements Runnable {
       dataOut.write(responseBody.getBytes(Charset.forName("UTF-8")));
       dataOut.flush();
     } catch (IOException ioe) {
-      logger.atSevere().withCause(ioe).log("Something went wrong while handling connection");
+      logger.atSevere().withCause(ioe).withStackTrace(StackSize.FULL).log(
+          "Something went wrong while handling connection.");
     } finally {
       try {
         in.close();
@@ -63,13 +66,28 @@ class Connection implements Runnable {
     }
   }
 
-  private Request readRequest(BufferedReader in) throws IOException {
-    String line = in.readLine();
-    while (line != null && line.length() > 0) {
-      System.out.println(line);
-      line = in.readLine();
-    }
+  private Request parseRequest(BufferedReader in) throws IOException {
+    List<String> lines = new ArrayList<>();
 
-    return request = new Request().setMethod("GET");
+    try {
+      Request request = new Request();
+      String line = in.readLine();
+      System.out.println("==============================");
+      while (line != null && line.length() > 0) {
+        lines.add(line);
+        System.out.println(line);
+        if (request.isRequestLine(line)) {
+          request.readRequestLine(line);
+        }
+
+        line = in.readLine();
+      }
+      System.out.println("==============================");
+
+      return request;
+    } catch (InvalidRequestException ire) {
+      throw new IOException(
+          String.format("Something went wrong while parsing request %s:", lines), ire);
+    }
   }
 }
