@@ -1,8 +1,8 @@
 ./src/main/java/com/surenderthakran/indextracker/RequestRunner.java
 ./src/main/java/com/surenderthakran/indextracker/Connection.java
-./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockHandler.java
-./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockRequest.java
 ./src/main/java/com/surenderthakran/indextracker/Server.java
-./src/main/java/com/surenderthakran/indextracker/Response.java
+./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockRequest.java
+./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockHandler.java
+./src/main/java/com/surenderthakran/indextracker/net/Response.java
 ./src/main/java/com/surenderthakran/indextracker/net/exceptions/InvalidRequestException.java
-./src/main/java/com/surenderthakran/indextracker/Request.java
+./src/main/java/com/surenderthakran/indextracker/net/Request.java

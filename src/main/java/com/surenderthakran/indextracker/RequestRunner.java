@@ -1,6 +1,8 @@
 package com.surenderthakran.indextracker;
 
 import com.google.common.flogger.FluentLogger;
+import com.surenderthakran.indextracker.net.Request;
+import com.surenderthakran.indextracker.net.Response;
 
 class RequestRunner {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
