@@ -14,7 +14,7 @@ endif
 run:
 ifdef DOCKER
 	@echo "Running $(PROJECT_NAME)..."
-	java -cp "classes:lib/*" com.surenderthakran.indextracker.Server
+	java -cp "classes:lib/*" com.surenderthakran.indextracker.App
 else
 	@echo \"make run\" will only work inside docker!!!
 endif

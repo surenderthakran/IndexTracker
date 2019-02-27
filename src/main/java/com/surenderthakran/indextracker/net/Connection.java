@@ -1,9 +1,7 @@
-package com.surenderthakran.indextracker;
+package com.surenderthakran.indextracker.net;
 
 import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.StackSize;
-import com.surenderthakran.indextracker.net.Request;
-import com.surenderthakran.indextracker.net.Response;
 import com.surenderthakran.indextracker.net.exceptions.InvalidRequestException;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;

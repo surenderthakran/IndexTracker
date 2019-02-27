@@ -37,7 +37,7 @@ public class Request {
     return String.format("Request: %s %s", this.method(), this.uri());
   }
 
-  public boolean isRequestLine(String line) {
+  boolean isRequestLine(String line) {
     line = line.toLowerCase().trim().replaceAll(" +", " ");
     String[] reqLineComponents = line.split("\\s+");
     if (reqLineComponents[0].equals("get") || reqLineComponents[0].equals("post")) {
@@ -46,7 +46,7 @@ public class Request {
     return false;
   }
 
-  public void readRequestLine(String line) throws InvalidRequestException {
+  void readRequestLine(String line) throws InvalidRequestException {
     // If Request Line is already read once.
     if (reqLineRead) {
       throw new InvalidRequestException("Multiple request lines found.");

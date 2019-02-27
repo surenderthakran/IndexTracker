@@ -1,4 +1,4 @@
-package com.surenderthakran.indextracker;
+package com.surenderthakran.indextracker.net;
 
 import com.google.common.flogger.FluentLogger;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.net.Socket;
 public class Server {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public static void main(String[] args) {
+  public void start() {
     try {
       ServerSocket serverSocket = new ServerSocket(18990);
       logger.atInfo().log("Listening on %d...", 18990);

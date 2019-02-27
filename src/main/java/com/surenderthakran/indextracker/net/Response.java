@@ -1,6 +1,6 @@
 package com.surenderthakran.indextracker.net;
 
-public class Response {
+class Response {
   String res;
 
   String response() {
