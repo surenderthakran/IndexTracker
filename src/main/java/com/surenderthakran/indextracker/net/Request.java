@@ -62,7 +62,18 @@ public class Request {
 
     if (reqLineComponents.length >= 2) {
       this.setUri(reqLineComponents[1]);
+      if (this.method() == HTTPMethod.GET) {
+        this.readQueryString();
+      }
     }
     this.reqLineRead = true;
+  }
+
+  void readQueryString() {
+    String uri = this.uri();
+    // TODO(surenderthakran): Update to handle multiple '?' chars in the uri and other sanity
+    // checks.
+    String queryString = uri.split("\\?")[1];
+    System.out.println(queryString);
   }
 }
