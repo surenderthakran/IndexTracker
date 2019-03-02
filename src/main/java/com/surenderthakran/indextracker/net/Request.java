@@ -11,6 +11,7 @@ public class Request {
   }
 
   String uri;
+  String queryString;
 
   boolean reqLineRead = false;
 
@@ -71,9 +72,15 @@ public class Request {
 
   void readQueryString() {
     String uri = this.uri();
-    // TODO(surenderthakran): Update to handle multiple '?' chars in the uri and other sanity
-    // checks.
-    String queryString = uri.split("\\?")[1];
-    System.out.println(queryString);
+    String queryString = "";
+    int queryStartIndex = uri.indexOf('?');
+    if (queryStartIndex > -1) {
+      int queryEndIndex = uri.indexOf('#', queryStartIndex);
+      if (queryEndIndex == -1) {
+        queryEndIndex = uri.length() - 1;
+      }
+      queryString = uri.substring(queryStartIndex, queryEndIndex + 1);
+    }
+    this.queryString = queryString;
   }
 }
