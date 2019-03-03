@@ -45,4 +45,4 @@ format:
 
 compile:
 	@echo "Compiling $(PROJECT_NAME)..."
-	javac -Xdiags:verbose -classpath "lib/*" -d classes @sources.txt
+	javac -Xdiags:verbose -Xlint:unchecked -classpath "lib/*" -d classes @sources.txt
