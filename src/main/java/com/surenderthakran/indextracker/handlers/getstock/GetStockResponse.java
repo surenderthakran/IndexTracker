@@ -1,9 +1,9 @@
 package com.surenderthakran.indextracker.handlers.getstock;
 
-class GetStockResponse {
-  String id;
-  int open;
-  int high;
-  int low;
-  int close;
+public class GetStockResponse {
+  public String id;
+  public int open;
+  public int high;
+  public int low;
+  public int close;
 }

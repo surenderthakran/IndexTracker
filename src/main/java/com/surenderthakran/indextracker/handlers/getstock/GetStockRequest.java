@@ -1,5 +1,7 @@
 package com.surenderthakran.indextracker.handlers.getstock;
 
-class GetStockRequest {
-  String id;
+import com.surenderthakran.indextracker.net.Request;
+
+public class GetStockRequest implements Request {
+  public String id;
 }
