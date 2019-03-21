@@ -1,16 +1,20 @@
 package com.surenderthakran.indextracker.net;
 
-import com.sun.net.httpserver.HttpHandler;
+import com.google.gson.reflect.TypeToken;
 
 public class Route {
   public String url;
-  public Request request;
+  public TypeToken<? extends Request> requestTypeToken;
   public Class responseClass;
-  public HttpHandler handler;
+  public Handler handler;
 
-  public Route(String url, Request request, Class responseClass, HttpHandler handler) {
+  public Route(
+      String url,
+      TypeToken<? extends Request> requestTypeToken,
+      Class responseClass,
+      Handler handler) {
     this.url = url;
-    this.request = request;
+    this.requestTypeToken = requestTypeToken;
     this.responseClass = responseClass;
     this.handler = handler;
   }

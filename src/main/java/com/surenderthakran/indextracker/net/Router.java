@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.surenderthakran.indextracker.handlers.getstock.GetStockHandler;
@@ -12,7 +13,6 @@ import com.surenderthakran.indextracker.handlers.getstock.GetStockResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class Router implements HttpHandler {
@@ -23,7 +23,7 @@ public class Router implements HttpHandler {
           .add(
               new Route(
                   "/getstock",
-                  new GetStockRequest(),
+                  new TypeToken<GetStockRequest>() {},
                   GetStockResponse.class,
                   new GetStockHandler()))
           .build();
@@ -56,30 +56,34 @@ public class Router implements HttpHandler {
         System.out.println("URI match found");
 
         // Type requestType = new TypeToken<route.request>() {}.getType();
-        // GetStockRequest getStockRequest = gson.fromJson(body, requestType);
+        // GetStockRequest getStockRequest = gson.fromJson(body, route.requestTypeToken.getType());
 
         // GetStockRequest getStockRequest = gson.fromJson(body, route.request.getClass());
 
-        GetStockRequest getStockRequest = gson.fromJson(body, GetStockRequest.class);
+        // GetStockRequest getStockRequest = gson.fromJson(body, GetStockRequest.class);
 
-        System.out.println(getStockRequest.id);
+        // System.out.println(getStockRequest.id);
 
-        GetStockResponse getStockResponse = new GetStockResponse();
+        route.handler.handle(exchange, gson.fromJson(body, route.requestTypeToken.getType()));
+
+        // GetStockResponse getStockResponse = new GetStockResponse();
         // getStockResponse.id = getStockRequest.id;
-        getStockResponse.id = "reliance";
-        getStockResponse.open = 12;
-        getStockResponse.high = 15;
-        getStockResponse.low = 10;
-        getStockResponse.close = 13;
+        // getStockResponse.id = "reliance";
+        // getStockResponse.open = 12;
+        // getStockResponse.high = 15;
+        // getStockResponse.low = 10;
+        // getStockResponse.close = 13;
 
-        String response = gson.toJson(getStockResponse);
-        System.out.println(response);
+        // String response = gson.toJson(getStockResponse);
         // String response =
         // "{\"id\":\"reliance\",\"open\":12,\"high\":15,\"low\":10,\"close\":13}";
-        exchange.sendResponseHeaders(200, response.getBytes().length); // response code and length
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        // System.out.println(response);
+
+        // exchange.sendResponseHeaders(200, response.getBytes().length); // response code and
+        // length
+        // OutputStream os = exchange.getResponseBody();
+        // os.write(response.getBytes());
+        // os.close();
       }
     }
   }
