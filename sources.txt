@@ -3,6 +3,7 @@
 ./src/main/java/com/surenderthakran/indextracker/net/Handler.java
 ./src/main/java/com/surenderthakran/indextracker/net/Router.java
 ./src/main/java/com/surenderthakran/indextracker/net/Request.java
+./src/main/java/com/surenderthakran/indextracker/net/Server.java
 ./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockResponse.java
 ./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockHandler.java
 ./src/main/java/com/surenderthakran/indextracker/handlers/getstock/GetStockRequest.java
