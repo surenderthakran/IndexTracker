@@ -25,6 +25,7 @@ public class Router implements HttpHandler {
           .add(
               new Route(
                   "/getstock",
+                  RequestMethod.POST,
                   new TypeToken<GetStockRequest>() {},
                   GetStockResponse.class,
                   new GetStockHandler()))
@@ -32,20 +33,7 @@ public class Router implements HttpHandler {
 
   @Override
   public void handle(HttpExchange exchange) throws IOException {
-    logger.atInfo().log("Routing request");
-
-    System.out.println(exchange.getRequestURI());
-    System.out.println("===================================================");
-    System.out.println(exchange.getRequestURI().getScheme());
-    System.out.println(exchange.getRequestURI().getAuthority());
-    System.out.println(exchange.getRequestURI().getHost());
-    System.out.println(exchange.getRequestURI().getPath());
-    System.out.println(exchange.getRequestURI().getPort());
-    System.out.println(exchange.getRequestURI().getQuery());
-    System.out.println(exchange.getRequestURI().getFragment());
-    System.out.println("===================================================");
-    System.out.println(exchange.getLocalAddress());
-    System.out.println(exchange.getRequestMethod());
+    logger.atInfo().log("Routing request: %s", exchange.getRequestURI());
 
     InputStream inputStream = exchange.getRequestBody();
     String body = CharStreams.toString(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
@@ -54,7 +42,8 @@ public class Router implements HttpHandler {
     Gson gson = new Gson();
 
     for (Route route : routes) {
-      if (route.url.equals(exchange.getRequestURI().getPath())) {
+      if (exchange.getRequestURI().getPath().equals(route.url)
+          && exchange.getRequestMethod().equals(route.method.name())) {
         System.out.println("URI match found");
 
         JsonElement jsonEle =

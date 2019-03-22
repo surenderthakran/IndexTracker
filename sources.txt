@@ -1,4 +1,5 @@
 ./src/main/java/com/surenderthakran/indextracker/net/Route.java
+./src/main/java/com/surenderthakran/indextracker/net/RequestMethod.java
 ./src/main/java/com/surenderthakran/indextracker/net/Handler.java
 ./src/main/java/com/surenderthakran/indextracker/net/Router.java
 ./src/main/java/com/surenderthakran/indextracker/net/Request.java
