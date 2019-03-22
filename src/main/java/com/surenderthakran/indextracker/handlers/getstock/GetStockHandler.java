@@ -5,6 +5,7 @@ import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.surenderthakran.indextracker.net.Handler;
+import com.surenderthakran.indextracker.net.Request;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +15,9 @@ import java.nio.charset.StandardCharsets;
 public class GetStockHandler implements Handler {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public void handle(HttpExchange exchange, GetStockRequest request) throws IOException {
+  @Override
+  public void handle(HttpExchange exchange, Request req) throws IOException {
+    GetStockRequest request = (GetStockRequest) req;
     logger.atInfo().log("Handling GetStock request");
 
     System.out.println(exchange.getRequestURI());

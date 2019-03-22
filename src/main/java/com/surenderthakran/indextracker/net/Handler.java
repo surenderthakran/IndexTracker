@@ -1,3 +1,8 @@
 package com.surenderthakran.indextracker.net;
 
-public interface Handler {}
+import com.sun.net.httpserver.HttpExchange;
+import java.io.IOException;
+
+public interface Handler {
+  public void handle(HttpExchange exchange, Request request) throws IOException;
+}
