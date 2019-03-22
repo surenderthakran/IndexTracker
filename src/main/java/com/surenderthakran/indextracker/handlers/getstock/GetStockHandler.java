@@ -3,20 +3,20 @@ package com.surenderthakran.indextracker.handlers.getstock;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
 import com.surenderthakran.indextracker.net.Handler;
 import com.surenderthakran.indextracker.net.Request;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class GetStockHandler implements Handler {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Override
-  public void handle(HttpExchange exchange, Request req) throws IOException {
+  public JsonElement handle(HttpExchange exchange, Request req) throws IOException {
     GetStockRequest request = (GetStockRequest) req;
     logger.atInfo().log("Handling GetStock request");
 
@@ -32,19 +32,11 @@ public class GetStockHandler implements Handler {
 
     GetStockResponse getStockResponse = new GetStockResponse();
     getStockResponse.id = request.id;
-    // getStockResponse.id = "reliance";
     getStockResponse.open = 12;
     getStockResponse.high = 15;
     getStockResponse.low = 10;
     getStockResponse.close = 13;
 
-    String response = gson.toJson(getStockResponse);
-    // String response = "{\"id\":\"reliance\",\"open\":12,\"high\":15,\"low\":10,\"close\":13}";
-    System.out.println(response);
-
-    exchange.sendResponseHeaders(200, response.getBytes().length); // response code and length
-    OutputStream os = exchange.getResponseBody();
-    os.write(response.getBytes());
-    os.close();
+    return gson.toJsonTree(getStockResponse);
   }
 }
