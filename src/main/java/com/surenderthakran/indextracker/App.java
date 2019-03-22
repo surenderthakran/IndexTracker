@@ -19,8 +19,8 @@ class App {
   public static void main(String[] args) throws IOException {
     HttpServer server = HttpServer.create(new InetSocketAddress(18990), 0);
 
-    server.createContext("/", App::handleGetRequest);
-    server.createContext("/getstock", new Router());
+    // server.createContext("/", App::handleGetRequest);
+    server.createContext("/", new Router());
 
     // Runs incoming requests in separate threads. It creates a new thread for each incoming request
     // and can technically result in unlimited threads being created. Alternatively, we can use
