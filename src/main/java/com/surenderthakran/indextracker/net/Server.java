@@ -18,7 +18,7 @@ public class Server {
     this.httpServer = HttpServer.create(new InetSocketAddress(builder.port), builder.backlog);
 
     // server.createContext("/", App::handleGetRequest);
-    this.httpServer.createContext("/", new Router());
+    this.httpServer.createContext("/", builder.router);
 
     // Runs incoming requests in separate threads. It creates a new thread for each incoming request
     // and can technically result in unlimited threads being created. Alternatively, we can use
@@ -53,6 +53,7 @@ public class Server {
   public static final class Builder {
     private int port;
     private int backlog = 0;
+    private Router router;
 
     public Builder() {}
 
@@ -63,6 +64,11 @@ public class Server {
 
     public Builder setBacklog(int backlog) {
       this.backlog = backlog;
+      return this;
+    }
+
+    public Builder setRouter(Router router) {
+      this.router = router;
       return this;
     }
 
