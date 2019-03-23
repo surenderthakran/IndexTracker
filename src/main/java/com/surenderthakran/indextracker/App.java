@@ -8,7 +8,7 @@ class App {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public static void main(String[] args) throws IOException {
-    Server server = new Server();
+    Server server = Server.builder().setPort(18990).build();
     server.start();
   }
 }

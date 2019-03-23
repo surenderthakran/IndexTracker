@@ -12,17 +12,22 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 
 public class Server {
-  public void start() throws IOException {
-    HttpServer server = HttpServer.create(new InetSocketAddress(18990), 0);
+  private HttpServer httpServer;
+
+  private Server(Builder builder) throws IOException {
+    this.httpServer = HttpServer.create(new InetSocketAddress(builder.port), builder.backlog);
 
     // server.createContext("/", App::handleGetRequest);
-    server.createContext("/", new Router());
+    this.httpServer.createContext("/", new Router());
 
     // Runs incoming requests in separate threads. It creates a new thread for each incoming request
     // and can technically result in unlimited threads being created. Alternatively, we can use
     // Executors.newFixedThreadPool().
-    server.setExecutor(Executors.newCachedThreadPool());
-    server.start();
+    this.httpServer.setExecutor(Executors.newCachedThreadPool());
+  }
+
+  public void start() {
+    this.httpServer.start();
   }
 
   private static void handleGetRequest(HttpExchange exchange) throws IOException {
@@ -39,5 +44,30 @@ public class Server {
     OutputStream os = exchange.getResponseBody();
     os.write(response.getBytes());
     os.close();
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private int port;
+    private int backlog = 0;
+
+    public Builder() {}
+
+    public Builder setPort(int port) {
+      this.port = port;
+      return this;
+    }
+
+    public Builder setBacklog(int backlog) {
+      this.backlog = backlog;
+      return this;
+    }
+
+    public Server build() throws IOException {
+      return new Server(this);
+    }
   }
 }
