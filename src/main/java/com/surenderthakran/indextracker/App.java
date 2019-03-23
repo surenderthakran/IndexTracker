@@ -19,12 +19,13 @@ class App {
     ImmutableList<Route> routes =
         ImmutableList.<Route>builder()
             .add(
-                new Route(
-                    "/getstock",
-                    RequestMethod.POST,
-                    new TypeToken<GetStockRequest>() {},
-                    GetStockResponse.class,
-                    new GetStockHandler()))
+                Route.builder()
+                    .setPath("/getstock")
+                    .setMethod(RequestMethod.POST)
+                    .setRequestTypeToken(new TypeToken<GetStockRequest>() {})
+                    .setResponseClass(GetStockResponse.class)
+                    .setHandler(new GetStockHandler())
+                    .build())
             .build();
 
     Server server =

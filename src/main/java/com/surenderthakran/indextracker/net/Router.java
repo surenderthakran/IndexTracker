@@ -33,12 +33,14 @@ public class Router implements HttpHandler {
     Gson gson = new Gson();
 
     for (Route route : routes) {
-      if (exchange.getRequestURI().getPath().equals(route.url)
-          && exchange.getRequestMethod().equals(route.method.name())) {
+      if (exchange.getRequestURI().getPath().equals(route.getPath())
+          && exchange.getRequestMethod().equals(route.getMethod().name())) {
         System.out.println("URI match found");
 
         JsonElement jsonEle =
-            route.handler.handle(exchange, gson.fromJson(body, route.requestTypeToken.getType()));
+            route
+                .getHandler()
+                .handle(exchange, gson.fromJson(body, route.getRequestTypeToken().getType()));
 
         String response = gson.toJson(jsonEle);
         System.out.println(response);
