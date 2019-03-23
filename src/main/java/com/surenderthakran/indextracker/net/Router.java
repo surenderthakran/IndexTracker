@@ -5,12 +5,8 @@ import com.google.common.flogger.FluentLogger;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.surenderthakran.indextracker.handlers.getstock.GetStockHandler;
-import com.surenderthakran.indextracker.handlers.getstock.GetStockRequest;
-import com.surenderthakran.indextracker.handlers.getstock.GetStockResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,16 +16,11 @@ import java.nio.charset.StandardCharsets;
 public class Router implements HttpHandler {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private static ImmutableList<Route> routes =
-      ImmutableList.<Route>builder()
-          .add(
-              new Route(
-                  "/getstock",
-                  RequestMethod.POST,
-                  new TypeToken<GetStockRequest>() {},
-                  GetStockResponse.class,
-                  new GetStockHandler()))
-          .build();
+  private ImmutableList<Route> routes;
+
+  private Router(Builder builder) {
+    this.routes = builder.routes;
+  }
 
   @Override
   public void handle(HttpExchange exchange) throws IOException {
@@ -57,6 +48,23 @@ public class Router implements HttpHandler {
         os.write(response.getBytes());
         os.close();
       }
+    }
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private ImmutableList<Route> routes;
+
+    public Builder setRoutes(ImmutableList<Route> routes) {
+      this.routes = routes;
+      return this;
+    }
+
+    public Router build() {
+      return new Router(this);
     }
   }
 }

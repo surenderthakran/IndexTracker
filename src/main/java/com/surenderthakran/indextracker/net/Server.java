@@ -55,8 +55,6 @@ public class Server {
     private int backlog = 0;
     private Router router;
 
-    public Builder() {}
-
     public Builder setPort(int port) {
       this.port = port;
       return this;

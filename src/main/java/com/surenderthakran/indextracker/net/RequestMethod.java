@@ -1,6 +1,6 @@
 package com.surenderthakran.indextracker.net;
 
-enum RequestMethod {
+public enum RequestMethod {
   GET,
   POST
 }
