@@ -18,11 +18,11 @@ public class GetStockHandler implements Handler {
     Gson gson = new Gson();
 
     GetStockResponse getStockResponse = new GetStockResponse();
-    getStockResponse.id = request.id;
-    getStockResponse.open = 12;
-    getStockResponse.high = 15;
-    getStockResponse.low = 10;
-    getStockResponse.close = 13;
+    getStockResponse.setId(request.getId());
+    getStockResponse.setOpen(12);
+    getStockResponse.setHigh(15);
+    getStockResponse.setLow(10);
+    getStockResponse.setClose(13);
 
     return gson.toJsonTree(getStockResponse);
   }
