@@ -8,3 +8,4 @@
 ./src/main/java/com/surenderthakran/indextracker/net/Server.java
 ./src/main/java/com/surenderthakran/indextracker/net/Request.java
 ./src/main/java/com/surenderthakran/indextracker/net/RequestMethod.java
+./src/test/java/com/surenderthakran/indextracker/net/RouterTest.java
