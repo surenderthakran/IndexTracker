@@ -19,6 +19,11 @@ else
 	@echo \"make run\" will only work inside docker!!!
 endif
 
+test:
+	@echo -e "\n...Preparing to test $(PROJECT_NAME)..."
+	@$(MAKE) compile
+	java -Dfile.encoding=UTF-8 -cp "classes:lib/*" org.junit.runner.JUnitCore com.surenderthakran.indextracker.net.RouterTest
+
 recompile:
 	@$(MAKE) prep_compile
 	@$(MAKE) format
