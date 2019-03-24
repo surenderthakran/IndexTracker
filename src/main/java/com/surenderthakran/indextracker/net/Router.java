@@ -30,12 +30,14 @@ public class Router implements HttpHandler {
     String body = CharStreams.toString(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
     System.out.println(body);
 
+    boolean matchFound = false;
     Gson gson = new Gson();
 
     for (Route route : routes) {
       if (exchange.getRequestURI().getPath().equals(route.getPath())
           && exchange.getRequestMethod().equals(route.getMethod().name())) {
-        System.out.println("URI match found");
+        logger.atInfo().log("URI match found for: %s", exchange.getRequestURI());
+        matchFound = true;
 
         JsonElement jsonEle =
             route
@@ -50,6 +52,17 @@ public class Router implements HttpHandler {
         os.write(response.getBytes());
         os.close();
       }
+    }
+
+    if (!matchFound) {
+      logger.atWarning().log("No URI match found for: %s", exchange.getRequestURI());
+
+      String response = "Path not found";
+
+      exchange.sendResponseHeaders(404, response.getBytes().length); // response code and length
+      OutputStream os = exchange.getResponseBody();
+      os.write(response.getBytes());
+      os.close();
     }
   }
 
