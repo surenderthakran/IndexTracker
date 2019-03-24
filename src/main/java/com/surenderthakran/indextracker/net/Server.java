@@ -1,5 +1,6 @@
 package com.surenderthakran.indextracker.net;
 
+import com.google.common.flogger.FluentLogger;
 import com.google.common.io.CharStreams;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -12,9 +13,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 
 public class Server {
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
+  private int port;
   private HttpServer httpServer;
 
   private Server(Builder builder) throws IOException {
+    this.port = builder.port;
+
     this.httpServer = HttpServer.create(new InetSocketAddress(builder.port), builder.backlog);
 
     // server.createContext("/", App::handleGetRequest);
@@ -27,6 +33,7 @@ public class Server {
   }
 
   public void start() {
+    logger.atInfo().log("Server listening on port %s ........", this.port);
     this.httpServer.start();
   }
 

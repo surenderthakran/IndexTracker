@@ -13,7 +13,7 @@ endif
 
 run:
 ifdef DOCKER
-	@echo "Running $(PROJECT_NAME)..."
+	@echo -e "\n...Running $(PROJECT_NAME)..."
 	java -Dfile.encoding=UTF-8 -cp "classes:lib/*" com.surenderthakran.indextracker.App
 else
 	@echo \"make run\" will only work inside docker!!!
@@ -31,18 +31,18 @@ reload:
 	@$(MAKE) run
 
 prep_install:
-	@echo "Preparing to install $(PROJECT_NAME)..."
+	@echo -e "\n...Preparing to install $(PROJECT_NAME)..."
 	@mkdir -p classes
 
 prep_compile:
-	@echo "Preparing to compile $(PROJECT_NAME)..."
+	@echo -e "\n...Preparing to compile $(PROJECT_NAME)..."
 	@rm -rf classes/*
 	find -name "*.java" > sources.txt
 
 format:
-	@echo "Formatting $(PROJECT_NAME)..."
+	@echo -e "\n...Formatting $(PROJECT_NAME)..."
 	java -jar lib/google-java-format-1.7-all-deps.jar --replace @sources.txt
 
 compile:
-	@echo "Compiling $(PROJECT_NAME)..."
+	@echo -e "\n...Compiling $(PROJECT_NAME)..."
 	javac -Xdiags:verbose -Xlint:unchecked -classpath "lib/*" -d classes @sources.txt
